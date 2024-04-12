@@ -20,13 +20,23 @@ public class DeleteFilesApplication implements CommandLineRunner {
 	DeleteFileController filecontroller;
 	
 	public static void main(String[] args) {
+		args = new String[]{"\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE", "730", "D"};
 		SpringApplication.run(DeleteFilesApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		LOG.info("l\'aplicacio de neteja de fitxers s\'està executant");
-		filecontroller.deleteFilesFromFolder();
+		//Path for move or delete files 
+		String path= args[0];
+		//ActualDate - Days to delete or move file
+		String days= args[1];
+		//MOVE ->"M" or DELETE -> "D"
+		String operationType = args[2];
+		
+		LOG.info(path+"\n"+days+"\n"+operationType);
+		
+		filecontroller.operateWithFiles(path, days, operationType);
 		LOG.warn("Neteja de fitxers executada!!");
 	}
 
