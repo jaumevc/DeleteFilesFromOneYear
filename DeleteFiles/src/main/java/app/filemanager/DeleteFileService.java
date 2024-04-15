@@ -1,6 +1,10 @@
 package app.filemanager;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -16,67 +20,64 @@ public class DeleteFileService {
 	
 	private static Logger LOG = LoggerFactory.getLogger(DeleteFileService.class);
 
-	private static final String DELETERUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE";
-	
-	private static final String MOVERUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_MOVED";
+//	private static final String DELETE_RUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE";
+	private static final String MOVE_RUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_MOVED";
 
-//	private File deleteRuthFilesFolder = new File(DELETERUTH_NAME);
+	public void moveFiles(String path, String days) throws IOException {
+		List<File> filesToMove = new ArrayList<>();
+		filesToMove = getOnlyFilesToWork(path, days);
+		moveOldFiles(path, filesToMove);
+	}
 	
-//	private List<File> onlyFilesInError = new ArrayList<>();
 	
-	public void deleteFiles(String path, String days, String operationType) {
+	public void deleteFiles(String path, String days) throws IOException {
 		List<File> filesToDelete = new ArrayList<>();
-		filesToDelete = getOnlyFilesToDelete(path, days, operationType);
+		filesToDelete = getOnlyFilesToWork(path, days);
 		deleteOldFiles(filesToDelete);
 	}
 
-	private List<File> getOnlyFilesToDelete(String path, String days, String operationType) {
-		File deleteRuthFilesFolder = new File(path);
-		List<File> filesInPath = new ArrayList<>();
+	private List<File> getOnlyFilesToWork(String path, String days) {
+		List<File> filesInPath = getFilesToWork(path);;
 		
-		//Vaig per aquí!!!!
-		filesInPath = Arrays.asList(deleteRuthFilesFolder.listFiles());
+		long limitDate = getLimitDate(days);
 		
-		// Obtenim la data actual
-//	    long currentTimeMillis = System.currentTimeMillis();
-//	    Date avui = new Date(currentTimeMillis);
-		
-		// Obtener la fecha actual
-        Date currentDate = new Date();
-        
-     // Convertir la fecha actual a un objeto Calendar
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-
-        // Número de días que quieres restar
-        int diasARestar = Integer.parseInt(days);
-        
-        // Restar los días
-        calendar.add(Calendar.DAY_OF_MONTH, -diasARestar);
-        
-     // Obtener la nueva fecha
-        Date nuevaFecha = calendar.getTime();
-        
-        long millisDesdeEpoca = currentDate.getTime();
-        long millisNuevaFecha = nuevaFecha.getTime();
-        
-        long dateAgo = millisDesdeEpoca - millisNuevaFecha; 
-        
-	    //Calculem la data de fa els dies que ens arriben (en mil·lisegons)
-//	    long daysInMillis= Integer.parseInt(days)* 24 * 60 * 60 * 1000;
-	    //Restem a la data actual els days que ens arriben anys
-//	    long dateAgo = currentTimeMillis - daysInMillis; 
-	    
 		List<File> onlyFilesToDelete = new ArrayList<>();
 
 		for (File f : filesInPath) {
-			if (!f.isDirectory() && f.lastModified() < dateAgo)
+			if (!f.isDirectory() && f.lastModified() < limitDate) {
 				onlyFilesToDelete.add(f);
+			}
 		}
 
 		return onlyFilesToDelete;
 	}
 	
+	private List<File> getFilesToWork(String path) {
+		File filesInFolder = new File(path);
+		return Arrays.asList(filesInFolder.listFiles());
+	}
+
+
+	private long getLimitDate(String days) {
+		//Obtenir data actual
+        Date currentDate = new Date();
+        
+        //Convertir data actual a un objecte Calendar
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+
+        //Número díes a restar
+        int diasARestar = Integer.parseInt(days);
+        
+        //Restar els díes a la data
+        calendar.add(Calendar.DAY_OF_MONTH, -diasARestar);
+        
+        //Obtenir la nova data
+        Date nuevaFecha = calendar.getTime();
+        
+		return nuevaFecha.getTime();
+	}
+
 	private void deleteOldFiles(List<File> filesToDelete) {
 		if(filesToDelete != null) {
 			for(File file: filesToDelete) {
@@ -86,9 +87,17 @@ public class DeleteFileService {
 			}
 		}
 	}
-
-	public void moveFiles(String path, String days, String operationType) {
-		// TODO Auto-generated method stub
-		
+	
+	private void moveOldFiles(String path, List<File> filesToMove) throws IOException {
+		for (File file : filesToMove) {
+			Path temp = Files.move(Paths.get(path + "\\" + file.getName()),
+					Paths.get(MOVE_RUTH_NAME + "\\" + file.getName()));
+			if (temp != null) {
+				LOG.warn("File renamed and moved successfully");
+			} else {
+				LOG.warn("Failed to move the file");
+			}
+		}
 	}
+
 }

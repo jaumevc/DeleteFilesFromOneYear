@@ -20,7 +20,8 @@ public class DeleteFilesApplication implements CommandLineRunner {
 	DeleteFileController filecontroller;
 	
 	public static void main(String[] args) {
-		args = new String[]{"\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE", "730", "D"};
+		//args = new String[]{"\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE", "30", "D"};
+		//args = new String[]{"\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE", "30", "M"};
 		SpringApplication.run(DeleteFilesApplication.class, args);
 	}
 
