@@ -93,7 +93,7 @@ public class DeleteFileService {
 			Path temp = Files.move(Paths.get(path + "\\" + file.getName()),
 					Paths.get(MOVE_RUTH_NAME + "\\" + file.getName()));
 			if (temp != null) {
-				LOG.warn("File renamed and moved successfully");
+				LOG.warn("File moved successfully");
 			} else {
 				LOG.warn("Failed to move the file");
 			}
