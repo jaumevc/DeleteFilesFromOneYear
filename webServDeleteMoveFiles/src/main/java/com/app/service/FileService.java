@@ -5,23 +5,46 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.app.model.FBW300PATH;
+import com.app.repository.FileRepositoryJDBC;
+
 
 @Service
 public class FileService {
 	
 	private static Logger LOG = LoggerFactory.getLogger(FileService.class);
-
+	
+	
+	
 //	private static final String DELETE_RUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE";
 	private static final String MOVE_RUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_MOVED";
+	
+	@Autowired
+	private FileRepositoryJDBC repoFileJDBC;
+	
+	public boolean isDataSourceConnectionValid() {
+		return repoFileJDBC.isDataSourceConnectionValid();
+    }
+	
+	public List<FBW300PATH> getAllArgumentsStmt(){
+		return repoFileJDBC.getAllArgumentsStmt();
+	}
 
 	public void moveFiles(String path, String days) throws IOException {
 		List<File> filesToMove = new ArrayList<>();

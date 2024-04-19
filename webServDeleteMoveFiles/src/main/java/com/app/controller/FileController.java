@@ -1,15 +1,26 @@
 package com.app.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.List;
+import java.util.ArrayList;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.model.Arguments;
+import com.app.model.FBW300PATH;
 import com.app.service.FileService;
 
 
@@ -17,6 +28,17 @@ import com.app.service.FileService;
 public class FileController {
 	@Autowired
 	FileService fileService;
+	
+	@PostMapping("/tester")
+	public void connectAndDoSomething() throws SQLException {
+		fileService.isDataSourceConnectionValid();
+	}
+	
+	@PostMapping("/arguments")
+	@ResponseBody
+	public List<FBW300PATH> reponseArgs() {
+		return fileService.getAllArgumentsStmt();
+	}
 	
 	@PostMapping("/deletefiles")
 	@ResponseBody

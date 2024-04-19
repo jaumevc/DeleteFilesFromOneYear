@@ -1,14 +1,14 @@
 package com.app.model;
 
-public class PathReference {
+public class FBW300PATH/*PathReference*/ {
 	private int idoper;
 	private String reference;
 	private String typeoper;
 	private String deletepath;
 	private String movepath;
 	
-	public PathReference() {}
-	public PathReference(int idoper, String reference, String typeoper, String deletepath, String movepath) {
+	public /*PathReference*/FBW300PATH() {}
+	public /*PathReference*/FBW300PATH(int idoper, String reference, String typeoper, String deletepath, String movepath) {
 		super();
 		this.idoper = idoper;
 		this.reference = reference;
