@@ -3,16 +3,14 @@ package com.app.model;
 public class FBW300PATH/*PathReference*/ {
 	private int idoper;
 	private String reference;
-	private String typeoper;
 	private String deletepath;
 	private String movepath;
 	
 	public /*PathReference*/FBW300PATH() {}
-	public /*PathReference*/FBW300PATH(int idoper, String reference, String typeoper, String deletepath, String movepath) {
+	public /*PathReference*/FBW300PATH(int idoper, String reference, String deletepath, String movepath) {
 		super();
 		this.idoper = idoper;
 		this.reference = reference;
-		this.typeoper = typeoper;
 		this.deletepath = deletepath;
 		this.movepath = movepath;
 	}
@@ -28,12 +26,7 @@ public class FBW300PATH/*PathReference*/ {
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
-	public String getTypeoper() {
-		return typeoper;
-	}
-	public void setTypeoper(String typeoper) {
-		this.typeoper = typeoper;
-	}
+
 	public String getDeletepath() {
 		return deletepath;
 	}

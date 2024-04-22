@@ -43,9 +43,11 @@
 
 		<!-- prepare to db connection -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<groupId>
+				org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/net.sf.jt400/jt400 -->
 		<dependency>
 			<groupId>net.sf.jt400</groupId>
@@ -53,44 +55,46 @@
 			<version>20.0.7</version>
 		</dependency>
 
-<!-- https://mvnrepository.com/artifact/net.sf.jt400/jt400 -->
-<!--<dependency>-->
-<!--    <groupId>net.sf.jt400</groupId>-->
-<!--    <artifactId>jt400</artifactId>-->
-<!--    <version>9.7</version>-->
-<!--</dependency>-->
 
 
+
+<!--https://mvnrepository.com/artifact/com.ibm.db2.jcc/db2-spring-boot-starter -->
+<!--						<dependency>-->
+<!--							<groupId>com.ibm.db2.jcc</groupId>-->
+<!--							<artifactId>db2-spring-boot-starter</artifactId>-->
+<!--							<version>0.0.1</version>-->
+<!--						</dependency>-->
+
+<!-- https://mvnrepository.com/artifact/com.ibm.db2/jcc -->
 <!--				<dependency>-->
-<!--					<groupId>net.sf.jt400</groupId>-->
-<!--					<artifactId>jt400</artifactId>-->
-<!--					<version>9.1</version>-->
-<!--					<scope>provided</scope>-->
-<!--				</dependency>-->
-
-
-		<!-- https://mvnrepository.com/artifact/com.ibm.db2/jcc -->
-<!--				<dependency>-->
-<!--					<groupId>com.ibm.db2</groupId> -->
-<!--					<artifactId>jcc</artifactId> -->
+<!--					<groupId>com.ibm.db2</groupId>-->
+<!--					<artifactId>jcc</artifactId>-->
 <!--					<version>11.5.9.0</version>-->
 <!--				</dependency>-->
 
 
-		<!-- https://mvnrepository.com/artifact/com.ibm.db2.jcc/db2jcc -->
-		<!--		<dependency>-->
-		<!--		    <groupId>com.ibm.db2.jcc</groupId>-->
-		<!--		    <artifactId>db2jcc</artifactId>-->
-		<!--		    <version>db2jcc4</version>-->
-		<!--		</dependency>-->
 
-		<!--
-		https://mvnrepository.com/artifact/com.ibm.db2.jcc/db2-spring-boot-starter -->
+
+
+
+
+		<!-- https://mvnrepository.com/artifact/net.sf.jt400/jt400 -->
+		<!--<dependency>-->
+		<!--    <groupId>net.sf.jt400</groupId>-->
+		<!--    <artifactId>jt400</artifactId>-->
+		<!--    <version>9.7</version>-->
+		<!--</dependency>-->
+
+
 		<!--				<dependency>-->
-		<!--					<groupId>com.ibm.db2.jcc</groupId>-->
-		<!--					<artifactId>db2-spring-boot-starter</artifactId>-->
-		<!--					<version>0.0.1</version>-->
+		<!--					<groupId>net.sf.jt400</groupId>-->
+		<!--					<artifactId>jt400</artifactId>-->
+		<!--					<version>9.1</version>-->
+		<!--					<scope>provided</scope>-->
 		<!--				</dependency>-->
+
+
+		
 
 
 		<!-- aqui -->
@@ -99,8 +103,17 @@
 		<!--    <groupId>com.ibm.as400</groupId>-->
 		<!--    <artifactId>jt400</artifactId>-->
 		<!--    <version>9.1</version>-->
-		<!--</dependency>-->
+		<!-- </dependency> -->
 
+
+		
+
+		<!-- https://mvnrepository.com/artifact/com.ibm.db2.jcc/db2jcc -->
+		<!--		<dependency>-->
+		<!--		    <groupId>com.ibm.db2.jcc</groupId>-->
+		<!--		    <artifactId>db2jcc</artifactId>-->
+		<!--			<version>db2jcc4</version>-->
+		<!--		</dependency>-->
 
 		<!-- Dependencia para JDBC-ODBC Bridge -->
 		<!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->

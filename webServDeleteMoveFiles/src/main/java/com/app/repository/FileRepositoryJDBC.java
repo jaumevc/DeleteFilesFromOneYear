@@ -45,12 +45,11 @@ public class FileRepositoryJDBC {
 		jdbcTemplate.execute((Connection connection) -> {
 			try {
 				Statement statement = connection.createStatement();
-				ResultSet rs = statement.executeQuery("SELECT * FROM FBW300PATH");
+				ResultSet rs = statement.executeQuery("SELECT * FROM interven2.FBW300PATH");
 				while (rs.next()) {
 					FBW300PATH argument = new FBW300PATH(
 				           rs.getInt("idoper"),
 				           rs.getString("reference"),
-				           rs.getString("typeoper"),
 				           rs.getString("deletepath"),
 				           rs.getString("movepath")
 				           );
