@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.model.Arguments;
-import com.app.model.FBW300PATH;
+import com.app.beans.Arguments;
+import com.app.beans.FBW300PATH;
 import com.app.service.FileService;
 
 
@@ -29,24 +29,15 @@ public class FileController {
 	@Autowired
 	FileService fileService;
 	
-	@PostMapping("/tester")
-	public void connectAndDoSomething() throws SQLException {
-		fileService.isDataSourceConnectionValid();
-	}
-	
-	@PostMapping("/arguments")
-	@ResponseBody
-	public List<FBW300PATH> reponseArgs() {
-		return fileService.getAllArgumentsStmt();
-	}
 	
 	@PostMapping("/deletefiles")
 	@ResponseBody
 	public void deleteFilesFromFolder(@RequestBody Arguments args) throws IOException {
-		if (Integer.valueOf(args.getDays()) >= 30) {
-			if (StringUtils.isNotEmpty(args.getOperationType())
-					&& StringUtils.equalsIgnoreCase("D", args.getOperationType())) {
-				fileService.deleteFiles(args.getPath(), args.getDays());
+		int limitdays = fileService.getDaysByReference(args.getReference());
+		if (limitdays >= 30) {
+			if (StringUtils.isNotEmpty(args.getReference())
+					&& StringUtils.equalsIgnoreCase("DEL_SARR_FILE", args.getReference())) {
+				fileService.deleteFiles(args.getReference());
 			}
 		}
 	}
@@ -54,10 +45,12 @@ public class FileController {
 	@PostMapping("/movefiles")
 	@ResponseBody
 	public void moveFilesFromFolder(@RequestBody Arguments args) throws IOException {
-		if (Integer.valueOf(args.getDays()) >= 30) {
-			if (StringUtils.isNotEmpty(args.getOperationType())
-					&& StringUtils.equalsIgnoreCase("M", args.getOperationType())) {
-				fileService.moveFiles(args.getPath(), args.getDays());
+		int limitdays = fileService.getDaysByReference(args.getReference());
+		
+		if (limitdays >= 30) {
+			if (StringUtils.isNotEmpty(args.getReference())
+					&& StringUtils.equalsIgnoreCase("MOV_SARR_FILE", args.getReference())) {
+				fileService.moveFiles(args.getReference());
 			}
 		}
 	}

@@ -1,18 +1,20 @@
-package com.app.model;
+package com.app.beans;
 
-public class FBW300PATH/*PathReference*/ {
+public class FBW300PATH {
 	private int idoper;
 	private String reference;
-	private String deletepath;
+	private String rootpath;
 	private String movepath;
+	private int limitdays;
 	
-	public /*PathReference*/FBW300PATH() {}
-	public /*PathReference*/FBW300PATH(int idoper, String reference, String deletepath, String movepath) {
+	public FBW300PATH() {}
+	public FBW300PATH(int idoper, String reference, String rootpath, String movepath, int limitdays) {
 		super();
 		this.idoper = idoper;
 		this.reference = reference;
-		this.deletepath = deletepath;
+		this.rootpath = rootpath;
 		this.movepath = movepath;
+		this.limitdays= limitdays;
 	}
 	public int getIdoper() {
 		return idoper;
@@ -27,16 +29,22 @@ public class FBW300PATH/*PathReference*/ {
 		this.reference = reference;
 	}
 
-	public String getDeletepath() {
-		return deletepath;
+	public String getRootpath() {
+		return rootpath;
 	}
-	public void setDeletepath(String deletepath) {
-		this.deletepath = deletepath;
+	public void setRootpath(String rootpath) {
+		this.rootpath = rootpath;
 	}
 	public String getMovepath() {
 		return movepath;
 	}
 	public void setMovepath(String movepath) {
 		this.movepath = movepath;
+	}
+	public int getLimitdays() {
+		return limitdays;
+	}
+	public void setLimitdays(int limitdays) {
+		this.limitdays = limitdays;
 	}
 }

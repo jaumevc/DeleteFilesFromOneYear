@@ -5,64 +5,56 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.model.FBW300PATH;
 import com.app.repository.FileRepositoryJDBC;
-
+import com.app.beans.*;
 
 @Service
 public class FileService {
 	
 	private static Logger LOG = LoggerFactory.getLogger(FileService.class);
-	
-	
-	
+
 //	private static final String DELETE_RUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE";
-	private static final String MOVE_RUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_MOVED";
+//	private static final String MOVE_RUTH_NAME = "\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_MOVED";
 	
 	@Autowired
 	private FileRepositoryJDBC repoFileJDBC;
 	
-	public boolean isDataSourceConnectionValid() {
-		return repoFileJDBC.isDataSourceConnectionValid();
-    }
-	
-	public List<FBW300PATH> getAllArgumentsStmt(){
-		return repoFileJDBC.getAllArgumentsStmt();
+	public int getDaysByReference(String reference) {
+		return repoFileJDBC.getDaysByReference(reference);
 	}
 
-	public void moveFiles(String path, String days) throws IOException {
-		List<File> filesToMove = new ArrayList<>();
-		filesToMove = getOnlyFilesToWork(path, days);
-		moveOldFiles(path, filesToMove);
-	}
-	
-	
-	public void deleteFiles(String path, String days) throws IOException {
-		List<File> filesToDelete = new ArrayList<>();
-		filesToDelete = getOnlyFilesToWork(path, days);
-		deleteOldFiles(filesToDelete);
-	}
-
-	private List<File> getOnlyFilesToWork(String path, String days) {
-		List<File> filesInPath = getFilesToWork(path);;
+	public void moveFiles(String reference) throws IOException {
+		FBW300PATH action = repoFileJDBC.getActionByReference(reference);
 		
-		long limitDate = getLimitDate(days);
+		List<File> filesToMove = new ArrayList<>();
+		filesToMove = getOnlyFilesToWork(action.getRootpath(), action.getLimitdays());
+		moveOldFiles(action.getRootpath(),action.getMovepath(), filesToMove);
+	}
+	
+	
+	public void deleteFiles(String reference) throws IOException {
+		FBW300PATH action = repoFileJDBC.getActionByReference(reference);
+				
+		List<File> filesToDelete = new ArrayList<>();
+		filesToDelete = getOnlyFilesToWork(action.getRootpath(), action.getLimitdays());
+		deleteOldFiles(filesToDelete, action.getRootpath());
+	}
+
+	private List<File> getOnlyFilesToWork(String path, int limitdays) {
+		List<File> filesInPath = getFilesToWork(path);
+		
+		long limitDate = getLimitDate(limitdays);
 		
 		List<File> onlyFilesToDelete = new ArrayList<>();
 
@@ -81,7 +73,7 @@ public class FileService {
 	}
 
 
-	private long getLimitDate(String days) {
+	private long getLimitDate(int limitdays) {
 		//Obtenir data actual
         Date currentDate = new Date();
         
@@ -90,7 +82,7 @@ public class FileService {
         calendar.setTime(currentDate);
 
         //Número díes a restar
-        int diasARestar = Integer.parseInt(days);
+        int diasARestar = limitdays;
         
         //Restar els díes a la data
         calendar.add(Calendar.DAY_OF_MONTH, -diasARestar);
@@ -101,20 +93,22 @@ public class FileService {
 		return nuevaFecha.getTime();
 	}
 
-	private void deleteOldFiles(List<File> filesToDelete) {
-		if(filesToDelete != null) {
+	private void deleteOldFiles(List<File> filesToDelete, String rootpath) {
+		if(filesToDelete != null && !filesToDelete.isEmpty()) {
 			for(File file: filesToDelete) {
 				if (file.delete()) {
 					LOG.warn("el fitxer eliminat"+ file.getName());
 				}
 			}
+		} else {
+			LOG.warn(" Al path "+rootpath+" no hi ha fitxers que compleixin les característiques per ser eliminats");
 		}
 	}
 	
-	private void moveOldFiles(String path, List<File> filesToMove) throws IOException {
+	private void moveOldFiles(String rootpath, String movePath, List<File> filesToMove) throws IOException {
 		for (File file : filesToMove) {
-			Path temp = Files.move(Paths.get(path + "\\" + file.getName()),
-					Paths.get(MOVE_RUTH_NAME + "\\" + file.getName()));
+			Path temp = Files.move(Paths.get(rootpath + "\\" + file.getName()),
+					Paths.get(movePath+ "\\" + file.getName()));
 			if (temp != null) {
 				LOG.warn("File moved successfully");
 			} else {
