@@ -38,7 +38,7 @@ public class FileService {
 		FBW300PATH action = repoFileJDBC.getActionByReference(reference);
 		
 		List<File> filesToMove = new ArrayList<>();
-		filesToMove = getOnlyFilesToWork(reference, action.getLimitdays());
+		filesToMove = getOnlyFilesToWork(action.getRootpath(), action.getLimitdays());
 		moveOldFiles(action.getRootpath(),action.getMovepath(), filesToMove);
 	}
 	
@@ -52,7 +52,7 @@ public class FileService {
 	}
 
 	private List<File> getOnlyFilesToWork(String path, int limitdays) {
-		List<File> filesInPath = getFilesToWork(path);;
+		List<File> filesInPath = getFilesToWork(path);
 		
 		long limitDate = getLimitDate(limitdays);
 		

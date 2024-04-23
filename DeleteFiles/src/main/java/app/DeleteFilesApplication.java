@@ -20,8 +20,8 @@ public class DeleteFilesApplication implements CommandLineRunner {
 	FileController filecontroller;
 	
 	public static void main(String[] args) {
-		//args = new String[]{"DEL_SARR_FILE", "730"};
-		args = new String[]{"DEL_SARR_FILE"};
+//		args = new String[]{"DEL_SARR_FILE", "730"};
+//		args = new String[]{"DEL_SARR_FILE"};
 //		args = new String[]{"MOV_SARR_FILE"};
 		SpringApplication.run(DeleteFilesApplication.class, args);
 	}
