@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import app.filemanager.DeleteFileController;
+import app.filemanager.FileController;
 
 
 
@@ -17,27 +17,23 @@ public class DeleteFilesApplication implements CommandLineRunner {
 	private static Logger LOG = LoggerFactory.getLogger(DeleteFilesApplication.class);
 	
 	@Autowired
-	DeleteFileController filecontroller;
+	FileController filecontroller;
 	
 	public static void main(String[] args) {
-		//args = new String[]{"\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE", "730", "D"};
-		//args = new String[]{"\\\\sarroca\\comu-inf$\\Suport\\test\\FILES_TO_DELETE", "30", "M"};
+		//args = new String[]{"DEL_SARR_FILE", "730"};
+		args = new String[]{"DEL_SARR_FILE"};
+//		args = new String[]{"MOV_SARR_FILE"};
 		SpringApplication.run(DeleteFilesApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		LOG.info("l\'aplicacio de neteja de fitxers s\'està executant");
-		//Path for move or delete files 
-		String path= args[0];
-		//ActualDate - Days to delete or move file
-		String days= args[1];
-		//MOVE ->"M" or DELETE -> "D"
-		String operationType = args[2];
+		String reference= args[0];
 		
-		LOG.info(path+"\n"+days+"\n"+operationType);
+		LOG.info(reference+".\n");
 		
-		filecontroller.operateWithFiles(path, days, operationType);
+		filecontroller.operateWithFiles(reference);
 		LOG.warn("Neteja de fitxers executada!!");
 	}
 
