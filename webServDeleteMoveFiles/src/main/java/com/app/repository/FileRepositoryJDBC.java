@@ -34,6 +34,12 @@ public class FileRepositoryJDBC {
 	    return result != null ? result : 0;
 	}
 	
+	public String getPathByReference(String reference) {
+	    String query = "SELECT rootpath FROM interven2.FBW300PATH WHERE reference=?";
+	    String result = jdbcTemplate.queryForObject(query, String.class, reference);
+	    return result != null ? result : "";
+	}
+	
 //	public List<FBW300PATH> getAllArgumentsStmt() {
 //		List<FBW300PATH> arguments= new ArrayList<>();
 //		jdbcTemplate.execute((Connection connection) -> {

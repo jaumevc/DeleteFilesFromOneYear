@@ -47,12 +47,20 @@
 				org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/net.sf.jt400/jt400 -->
 		<dependency>
 			<groupId>net.sf.jt400</groupId>
 			<artifactId>jt400</artifactId>
 			<version>20.0.7</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.samba.jcifs/jcifs -->
+		<!--Acces als recursos-carpetes del sistema amb usuari i passwor-->
+		<dependency>
+			<groupId>org.samba.jcifs</groupId>
+			<artifactId>jcifs</artifactId>
+			<version>1.3.3</version>
 		</dependency>
 
 	</dependencies>
