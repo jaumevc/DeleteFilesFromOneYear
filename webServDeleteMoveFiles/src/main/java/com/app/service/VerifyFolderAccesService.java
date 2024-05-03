@@ -1,13 +1,13 @@
 package com.app.service;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.AclEntry;
-import java.nio.file.attribute.AclFileAttributeView;
-
 import java.nio.file.attribute.AclEntryPermission;
+import java.nio.file.attribute.AclFileAttributeView;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,12 +15,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-//import jcifs.smb.NtlmPasswordAuthentication;
-//import jcifs.smb.SmbFile;
-//import jcifs.smb.SmbFileInputStream;
-//import jcifs.smb.ACE;
-//import jcifs.smb.SID;
 
 @Service
 public class VerifyFolderAccesService {
