@@ -33,6 +33,10 @@ public class FileService {
 	public int getDaysByReference(String reference) {
 		return repoFileJDBC.getDaysByReference(reference);
 	}
+	
+	public String getPathByReference(String reference) {
+		return repoFileJDBC.getPathByReference(reference);
+	}
 
 	public void moveFiles(String reference) throws IOException {
 		FBW300PATH action = repoFileJDBC.getActionByReference(reference);

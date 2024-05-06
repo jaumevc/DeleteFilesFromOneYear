@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  java_app:
+    container_name: java_app
+    image: ws-java-app:1.0.0
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - java_db
+    environment:
+      - spring.datasource.url=jdbc:as400://192.168.1.12/interven2
+      - spring.datasource.username=progweb
+      - spring.datasource.password=notedille
+
+  java_db:
+    container_name: java_db
+    # Aquí has de definir la imatge de la teva base de dades AS400
+    # Seguint l'exemple de la teva configuració, podríem usar una imatge específica per a AS400, però aquesta no és una imatge estàndard de Docker.
+    # Si no tens una imatge predefinida per a AS400, hauràs de trobar-ne una o bé crear la teva pròpia.
+    # Aquí usarem una imatge de MySQL com a exemple.
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=interven2
+
+
